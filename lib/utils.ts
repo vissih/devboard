@@ -1,9 +1,14 @@
 import { UTCDate } from "@date-fns/utc";
 import { clsx, type ClassValue } from "clsx"
+import { differenceInDays } from "date-fns";
 import { twMerge } from "tailwind-merge"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
+}
+
+export function clearString(str: string) {
+  return str.trim().replace(/^@/, '');
 }
 
 export function getTileColor(githubCount: number, leetcodeCount: number) {
@@ -199,7 +204,10 @@ export function getStreaks(cal: Record<string, { github?: number; leetcode?: num
 
   return {
     meta: {
-      totalDays: sortedDates.length,
+      totalDays: differenceInDays(
+        today,
+        new UTCDate(today.getFullYear(), 0, 1)
+      ) + 1
     },
     github: { 
       currentStreak: ghCurrentStreak, 

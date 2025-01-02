@@ -6,16 +6,15 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 import { useRouter } from 'next/navigation';
-
+import { clearString } from "@/lib/utils";
 export default function Home() {
   const router = useRouter();
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const github = formData.get('github') as string;
-    const leetcode = formData.get('leetcode') as string;
-    
+    const github = clearString(formData.get('github') as string);
+    const leetcode = clearString(formData.get('leetcode') as string);        
     router.push(`/stats?github=${encodeURIComponent(github)}&leetcode=${encodeURIComponent(leetcode)}`);
   };
 
